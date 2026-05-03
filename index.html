@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kvarwaxi</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #0f0f0f;
+  color: white;
+}
+
+/* NAVBAR /
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background: black;
+  position: sticky;
+  top: 0;
+}
+
+.logo {
+  color: #00ffcc;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+nav a {
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+nav a:hover {
+  color: #00ffcc;
+}
+
+/ HERO /
+.hero {
+  height: 90vh;
+  background: url("https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070") center/cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 55px;
+  background: rgba(0,0,0,0.6);
+  padding: 10px 20px;
+}
+
+.hero button {
+  margin-top: 20px;
+  padding: 12px 25px;
+  border: none;
+  background: #00ffcc;
+  color: black;
+  cursor: pointer;
+}
+
+/ PRODUCTS /
+.products {
+  padding: 40px;
+  text-align: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.card {
+  background: #1a1a1a;
+  border-radius: 10px;
+  padding: 15px;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.card button {
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px;
+  background: #00ffcc;
+  border: none;
+  cursor: pointer;
+}
+
+/ CART BUTTON /
+.cart-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #00ffcc;
+  color: black;
+  padding: 15px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/ CART PANEL */
+.cart {
+  position: fixed;
+  right: -300px;
+  top: 0;
+  width: 300px;
+  height: 100%;
+  background: black;
+  padding: 20px;
+  transition: 0.3s;
+}
+
+.cart.active {
+  right: 0;
+}
+
+.cart ul {
+  list-style: none;
+  margin-top: 10px;
+}
+
+.cart li {
+  margin: 10px 0;
+}
+
+.remove {
+  color: red;
+  cursor: pointer;
+  margin-left: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">KVARWAXI</div>
+  <nav>
+    <a onclick="scrollToSection('home')">Home</a>
+    <a onclick="scrollToSection('shop')">Shop</a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <h1>Kvarwaxi Streetwear</h1>
+  <button onclick="scrollToSection('shop')">Shop Now</button>
+</section>
+
+<section class="products" id="shop">
+  <h2>Our Collection</h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=500">
+      <h3>KX Runner</h3>
+      <p>$120</p>
+      <button onclick="addToCart('KX Runner',120)">Add to Cart</button>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?q=80&w=500">
+      <h3>KX Street</h3>
+      <p>$95</p>
+      <button onclick="addToCart('KX Street',95)">Add to Cart</button>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1528701800489-20be3c5c89b4?q=80&w=500">
+      <h3>KX Pro</h3>
+      <p>$150</p>
+      <button onclick="addToCart('KX Pro',150)">Add to Cart</button>
+    </div>
+
+  </div>
+</section>
+
+<div class="cart-btn" onclick="toggleCart()">🛒</div>
+
+<div class="cart" id="cart">
+  <h2>Cart</h2>
+  <ul id="cartItems"></ul>
+  <p id="total">Total: $0</p>
+</div>
+
+<script>
+let cart = [];
+let total = 0;
+
+function addToCart(name, price) {
+  cart.push({name, price});
+  total += price;
+  renderCart();
+}
+
+function renderCart() {
+  const list = document.getElementById("cartItems");
+  list.innerHTML = "";
+
+  cart.forEach((item, index) => {
+    let li = document.createElement("li");
+    li.innerHTML = item.name + " $" + item.price +
+      '<span class="remove" onclick="removeItem('+index+')">❌</span>';
+    list.appendChild(li);
+  });
+
+  document.getElementById("total").innerText = "Total: $" + total;
+}
+
+function removeItem(index) {
+  total -= cart[index].price;
+  cart.splice(index, 1);
+  renderCart();
+}
+
+function toggleCart() {
+  document.getElementById("cart").classList.toggle("active");
+}
+
+function scrollToSection(id) {
+  document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+}
+</script>
+
+</body>
+</html>
